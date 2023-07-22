@@ -7,6 +7,7 @@ from uuid import uuid4
 from typing import Union, Callable, Optional
 from functools import wraps
 
+
 def count_calls(method: Callable) -> Callable:
     """counts how many times methods of the Cache class are called"""
     @wraps(method)
@@ -15,6 +16,7 @@ def count_calls(method: Callable) -> Callable:
         self._redis.incr(method.__qualname__)
         return method(self, *args, **kwargs)
     return wrapper
+
 
 def call_history(method: Callable) -> Callable:
     """stores the history of inputs and outputs for a particular
@@ -80,4 +82,3 @@ class Cache:
     def get_int(self, key: str) -> int:
         """automatically parametrize Cache.get to int"""
         return self.get(key, int)
-    
